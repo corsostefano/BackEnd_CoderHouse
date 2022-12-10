@@ -4,11 +4,11 @@ const express = require('express');
 const ProductManager = require('./productmanager');
 
 //Se transforma la dependencia de express en una constante llamada app
-const App = express();
+const app = express();
 const Manager = new ProductManager();
 
 //Generacion de nuevos productos
-App.get("/", (req, res) => {
+app.get("/", (req, res) => {
   Manager.addProduct(
     "Aromatizador Textil Línea Clásica 500 ml",
     "Te propone reforzar la perfumación obtenida con las varas difusoras en el ambiente, con el uso del aromatizador textil.",
@@ -43,7 +43,7 @@ App.get("/", (req, res) => {
   );
   res.send('Productos generados exitosamente!');
 });
-App.get('/products', async (req, res) => {
+app.get('/products', async (req, res) => {
   const ProductsFromDB = await Manager.getProducts();
   const Limit = req.query.limit;
 
@@ -55,7 +55,7 @@ App.get('/products', async (req, res) => {
     res.send('Error, los productos no se pueden visualizar');
   }
 });
-App.get('/products/:pid', async (req, res) => {
+app.get('/products/:pid', async (req, res) => {
   const ProductsFromDB = await Manager.getProducts();
   const IdParam = req.params.pid;
   const FindProductByParam = ProductsFromDB[IdParam];
@@ -70,7 +70,7 @@ App.get('/products/:pid', async (req, res) => {
 //Puerto Local / localhost 8080
 const Port = 8080;
 
-App.listen(Port, () => console.log('Servidor express ejecutándose.'));
+app.listen(Port, () => console.log('Servidor express ejecutándose.'));
 
 
 
