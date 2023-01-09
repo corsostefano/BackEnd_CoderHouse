@@ -8,6 +8,7 @@ const errorRoutes = require("./routes/error.routes.js")
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
+//routes
 app.use("/api/products", productRoutes)
 app.use("/api/carts", cartRoutes)
 app.use("*", errorRoutes)
