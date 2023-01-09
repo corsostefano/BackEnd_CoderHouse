@@ -18,14 +18,12 @@ module.exports = class ProductController {
     async getById(req, res) {
         try {
             const { id } = req.params
-            if (isNaN(id)) {
-                res.status(400).json({ Error: "El parametro ingresado no es un numero" })
-            }
-            const product = products.filter(filterProduct => filterProduct.id == Number(id))
-            if (!product[0]) {
-                res.status(404).json({ Error: "El producto no existe" })
-            }
-            res.status(200).json(product)
+            products = await fs.promises.readFile(filePath, 'utf-8')
+            products = JSON.parse(products)
+            console.log(req)
+            console.log(id)
+            const product = products.find((product) => product.id == id)
+            res.json(product)
         } catch (error) {
             console.log("Error en getById", error);
         }
