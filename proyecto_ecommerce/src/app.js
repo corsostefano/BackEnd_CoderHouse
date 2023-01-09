@@ -1,17 +1,16 @@
-import express from 'express';
-//Router
-import productsRouter from "../src/routers/products/products.router.js";
-import cartsRouter from "../src/routers/carts/carts.router.js";
+const express = require("express")
+require("dotenv").config()
+const app = express()
+const productRoutes = require("./routes/product.routes.js")
+const cartRoutes = require("./routes/cart.routes.js")
+const errorRoutes = require("./routes/error.routes.js")
 
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-//Router
-app.use("/api/products", productsRouter);
-app.use("/api/carts", cartsRouter);
-
+app.use("/api/products", productRoutes)
+app.use("/api/carts", cartRoutes)
+app.use("*", errorRoutes)
 
 const PORT= 8080
 const server = app.listen(PORT, () => 
